@@ -1,0 +1,76 @@
+<div class="iframe-wrapper">
+    <div class="caption">
+        <div><img src="/static/leaves-white.png" alt=""></div>
+        <div><small>Name:</small><span>{{title}}</span></div>
+        <div><small>Creation Date:</small><span style="display: inline-block">{{creationDate}}</span></div>
+    </div>
+    <iframe id="content-blob" src="{{blobUrl}}" alt="{{dispId}}" frameborder="0"></iframe>
+</div>
+<style>
+    body {
+        height: 100vh;
+        width: 100vw;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, Helvetica, sans-serif;
+
+        display: flex;
+        justify-content: stretch;
+        background-color: #383e42;
+        color: #c7c1bd;
+    }
+
+    .iframe-wrapper {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+    }
+
+    iframe {
+        flex-grow: 1;
+        border-top: 2px solid #c7c1bd;
+    }
+
+    .caption {
+        font-size: 20px;
+        margin: 10px;
+    }
+
+    .caption>div {
+        display: inline-block;
+    }
+
+    @media only screen and (max-width: 600px) {
+        .caption>div {
+            display: block;
+        }
+
+        .caption>div:last-of-type {
+            margin-right: 4px;
+        }
+    }
+
+    .caption>div:not(:last-of-type) {
+        margin-right: 4px;
+    }
+
+    .caption img {
+        height: 1em;
+    }
+
+    .caption>div>small {
+        margin-right: 2px;
+    }
+</style>
+
+{{!-- <script>
+    document.getElementById("content-blob").addEventListener("load", e => {
+        var blobWidth = e.currentTarget.contentDocument.body.scrollWidth;
+        var visibleWidth = document.body.offsetWidth;
+        if (blobWidth === visibleWidth)
+            e.currentTarget.contentDocument.body.style["overflow-y"] = "hidden";
+    });
+</script> --}}

@@ -1,0 +1,18 @@
+<div style="margin: 20px;">
+    {{#each files}}
+    <div>
+        <a href="{{this.del}}" style="background-color: rgb(255, 79, 79);">Delete</a>
+        <a href="{{this.link}}">{{this.text}}</a>
+        {{#if isImg }}
+        <img src="{{this.rawLink}}" alt="{{this.text}}" class="sml-img">
+        {{/if}}
+        {{#if isIframe }}
+        <iframe src="{{this.rawLink}}" alt="{{this.text}}" class="sml-img">
+        {{/if}}
+        {{#if isNothing }}
+        <img src="/static/download.webp" alt="Download" class="sml-img">
+        {{/if}}
+        
+    </div>
+    {{/each}}
+</div>

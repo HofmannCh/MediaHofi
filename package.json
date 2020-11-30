@@ -1,0 +1,34 @@
+{
+  "name": "hofi_uploader",
+  "version": "1.0.0",
+  "main": "init.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon ./init.js",
+    "start": "node ./init.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.16.3",
+    "express-basic-auth": "^1.2.0",
+    "express-fileupload": "^1.2.0",
+    "express-handlebars": "^5.2.0",
+    "mime-types": "^2.1.27",
+    "moment": "^2.29.1",
+    "morgan": "^1.10.0",
+    "pretty-bytes": "^5.1.0",
+    "sqlite3": "^5.0.0",
+    "uuid": "^8.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "init.js",
+      "views"
+    ],
+    "ext": "js, .hbs"
+  }
+}
