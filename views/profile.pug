@@ -1,0 +1,24 @@
+extends layout
+
+block layout-content
+  div.content
+    if id
+      h1.banner="Edit profile "
+        i.fas.fa-edit.smoll
+    else
+      h1.banner="Create profile "
+        i.fas.fa-plus.smoll
+    form.form(method="post")
+      input(type="hidden", id="id", name="id", value=id)
+      .form-group.row
+        label.col-md-2.col-form-label(for="name") Name
+        div.col-md-4
+          input.form-control(id="name", name="name", type="text", required, value=name)
+      if key
+        .form-group.row
+          label.col-md-2.col-form-label(for="Key") Key
+          div.col-md-4
+            input.form-control(id="key", name="key", type="text", value=key, readonly)
+      .form-group.row
+        .col-md-6
+          input.btn.btn-primary(type="submit" value="Save")

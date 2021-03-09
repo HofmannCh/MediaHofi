@@ -1,0 +1,38 @@
+extends layout
+
+block layout-content
+  div.content
+    if id
+      h1.banner="Edit user "
+        i.fas.fa-edit.smoll
+    else
+      h1.banner="Create user "
+        i.fas.fa-plus.smoll
+    form.form(method="post")
+      input(type="hidden", id="id", name="id", value=id)
+      .form-group.row
+        label.col-md-2.col-form-label(for="display_name") Display name
+        div.col-md-4
+          input.form-control(id="display_name", name="display_name", type="text", required, value=display_name)
+      .form-group.row
+        label.col-md-2.col-form-label(for="username") Username
+        div.col-md-4
+          input.form-control(id="username", name="username", type="text", required, value=username)
+      .form-group.row
+        label.col-md-2.col-form-label(for="password") Password
+        div.col-md-4
+          input.form-control(id="password", name="password", type="password", autocomplete="new-password")
+      if id
+        .form-group.row
+          label.col-md-2.col-form-label(for="reset_salt") Reset salt
+          div.col-md-4
+            .form-check
+              input.form-check-input(id="reset_salt", name="reset_salt", type="checkbox")
+      .form-group.row
+        label.col-md-2.col-form-label(for="is_admin") Admin
+        div.col-md-4
+          .form-check
+            input.form-check-input(id="is_admin", name="is_admin", type="checkbox", checked=(!!is_admin))
+      .form-group.row
+        .col-md-6
+          input.btn.btn-primary(type="submit" value="Save")

@@ -1,0 +1,208 @@
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1, shrink-to-fit=no")
+    meta(name="theme-color" content="#008080")
+    
+    title=name + " hofi.dev"
+    meta(property="og:title" content="hofi.dev")
+    meta(name="description" content=name)
+    meta(property="og:description" content=name)
+    meta(property="og:url" content=absoluteBlobUrl)
+    if isImage
+      meta(property="og:image" content=absoluteBlobUrl)
+      meta(property="og:image:type" content=contentType)
+
+  body
+    .wrapper
+      if canDelete
+        .hbtn.delete-button(onclick="return confirm('Do you want to delete file?')")
+          a(href="/deleteFile/" + path)
+            div
+      .hbtn.source-button
+        a(href=blobUrl)
+          div
+      .hbtn.download-button
+        a(href=blobUrl download=name)
+          div
+      .hbtn.toggle-button
+        a
+          div
+      .caption
+        div 
+          img(src="/static/leaves-white.png" alt="Logo")
+        div
+          small Path:
+          span=path
+        if inDb
+          div
+            small Name:
+            span=name
+          div
+            small Creation Date:
+            span(style="display: inline-block")=creationDate
+      if isImage
+        #content-image.blob
+          img(src=blobUrl alt=name)
+      else
+        iframe#content-blob.blob(src=blobUrl alt=name frameborder="0")
+    script.
+      var coll = document.getElementsByClassName("toggle-button");
+      for (var i = 0; i < coll.length; i++) {
+          coll[i].addEventListener("click", function () {
+              this.nextElementSibling.classList.toggle("visible");
+              this.classList.toggle("active");
+          });
+      }
+    style.
+      body {
+          height: 100vh;
+          max-height: 100vh;
+          width: 100vw;
+          max-width: 100vw;
+          margin: 0;
+          padding: 0;
+          border: 0;
+          font-family: Arial, Helvetica, sans-serif;
+
+          display: flex;
+          justify-content: stretch;
+          background-color: #383e42;
+          color: #c7c1bd;
+      }
+
+      .wrapper {
+          display: flex;
+          width: 100%;
+          height: 100%;
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: stretch;
+      }
+
+      .blob {
+          width: 100vw;
+          flex-grow: 1;
+          overflow: auto;
+      }
+
+      #content-blob {}
+
+      #content-image {}
+
+      #content-image>img {
+          object-fit: contain;
+          display: block;
+          max-height: 100%;
+          margin-left: auto;
+          margin-right: auto;
+      }
+
+      .hbtn {
+          display: block;
+          position: absolute;
+          top: 0;
+          height: 35px;
+          width: 35px;
+          padding: 5px;
+          background-color: rgba(56, 62, 66, .5);
+          transition: background-color .5s;
+          border-bottom: 2px solid #c7c1bd;
+          border-left: 2px solid #c7c1bd;
+      }
+
+      .hbtn.active {
+          background-color: rgba(56, 62, 66, 1);
+      }
+
+      .hbtn div {
+          height: 100%;
+          width: 100%;
+
+          background-size: 100% 100%;
+          background-repeat: no-repeat;
+      }
+
+      .toggle-button {
+          right: 0px;
+      }
+
+      .toggle-button div {
+          background-image: url(/static/angle-down-solid.svg);
+          transition: transform .5s;
+      }
+
+      .toggle-button.active div {
+          transform: scaleY(-1);
+      }
+
+      .download-button {
+          right: 45px;
+      }
+
+      .download-button div {
+          background-image: url(/static/download-solid.svg);
+      }
+
+      .source-button {
+          right: 90px;
+      }
+
+      .source-button div {
+          background-image: url(/static/external-link-alt-solid.svg);
+      }
+
+      .delete-button {
+          right: 135px;
+      }
+
+      .delete-button div {
+          background-image: url(/static/delete.svg);
+      }
+
+      .caption {
+          font-size: 20px;
+          max-height: 0px;
+
+          padding: 0 10px 0 10px;
+
+          border-bottom: 0px solid #c7c1bd;
+
+          transition: all .5s;
+          overflow: hidden;
+      }
+
+      .caption.visible {
+          max-height: 35px;
+          overflow: inherit;
+
+          padding: 10px 10px 10px 10px;
+          border-bottom: 2px solid #c7c1bd;
+      }
+
+      .caption>div {
+          display: inline-block;
+      }
+
+      @media only screen and (max-width: 600px) {
+          .caption>div {
+              display: block;
+          }
+
+          .caption>div:last-of-type {
+              margin-right: 4px;
+          }
+      }
+
+      .caption>div:not(:last-of-type) {
+          margin-right: 4px;
+      }
+
+      .caption img {
+          height: 1em;
+      }
+
+      .caption>div>small {
+          margin-right: 2px;
+      }

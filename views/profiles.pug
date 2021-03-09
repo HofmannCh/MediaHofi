@@ -1,0 +1,33 @@
+extends layout
+
+block layout-content
+  div.content
+    .d-flex.justify-content-between
+      h1.banner="Profiles "
+        .fas.fa-project-diagram.smoll
+      div.d-flex.align-items-center
+        a.btn.btn-primary.my-1(href="/profile/edit")
+          .fas.fa-plus.mr-1
+          span Create profile
+    table.table
+      thead
+        tr
+          th Id
+          if session.isAdmin
+            th User
+          th Name
+          th Actions
+      tbody
+        each val in data
+          tr
+            td=val.id 
+            if session.isAdmin
+              td=val.user
+            td=val.name 
+            td
+              a.btn.btn-sm.btn-primary.mr-2(href="/profile/show/" + val.id )
+                i.fas.fa-folder
+              a.btn.btn-sm.btn-primary.mr-2(href="/profile/edit/" + val.id )
+                i.fas.fa-edit
+              a.btn.btn-sm.btn-danger.delete-confirm(href="/profile/delete/" + val.id data-entity-name="Profil" data-entity-value=val.name)
+                i.fas.fa-trash

@@ -1,0 +1,18 @@
+extends layout
+
+block layout-content
+  div.content
+    h1.banner="Login " 
+      i.fas.fa-user-lock.smoll
+    form.form(method="post")
+      .form-group.row
+        label.col-md-2.col-form-label(for="username") Username
+        div.col-md-4
+          input.form-control(id="username", name="username", type="text", required)
+      .form-group.row
+        label.col-md-2.col-form-label(for="password") Password
+        div.col-md-4
+          input.form-control(id="password", name="password", type="password", required)
+      .form-group.row
+        .col-md-6
+          input.btn.btn-primary(type="submit")

@@ -1,0 +1,66 @@
+extends layout
+
+block layout-content
+  div.content
+    .row
+      h1.col-12.col-md-6.banner="Profile " + profileName + " "
+        .fas.fa-project-diagram.smoll
+    .row.mb-1
+      .col-12.col-md-7.col-lg-6.col-xl-5
+        .input-group
+          .input-group-prepend
+            span.input-group-text
+              i.fas.fa-calendar.mx-2
+          input#datepicker.form-control.text-center(name="daterange" aria-describedby="inputGroup-sizing-default")
+      .col-12.col-md-5.col-lg-6.col-xl-7.clearfix.mt-2.mt-md-0
+        a.float-right.btn.btn-danger.delete-files
+          .fas.fa-trash
+        a.float-right.btn.btn-primary.mr-2.download-files
+          .fas.fa-file-download
+        a.float-right.btn.btn-secondary.mr-2.reload-files
+          i.fas.fa-redo-alt
+        a.float-right.btn.mr-2.loading-files
+          i.fas.fa-spinner.fa-spin.loading
+    .data
+  script(src="/static/selectable.min.js")
+  script(src="/static/pages/profiles.js") 
+
+  style.
+    .blob {
+      padding: 4px;
+      background-color: var(--light);
+      border-radius: 5px;
+    }
+    
+    .blob > * {
+      display: block;
+      height: 80px;
+      width: 100%
+    }
+
+    .blob > img {
+      object-fit: contain;
+    }
+
+    .blob-wrapper {
+      border-radius: 5px;
+    }
+
+    .blob-wrapper.ui-selected {
+      background-color: lightblue;
+    }
+
+    .blob-wrapper.ui-selecting {
+      background-color: lightskyblue;
+    }
+
+    .day-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 20px 10px;
+      grid-auto-flow: dense;
+    }
+
+    .day-row .blob-wrapper {
+      padding: 5px;
+    }

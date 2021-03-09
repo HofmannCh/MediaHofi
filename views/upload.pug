@@ -1,0 +1,20 @@
+extends layout
+
+block layout-content
+  div.content
+    h1.banner="Upload " 
+      i.fas.fa-file-upload.smoll
+    form.form(method="post" encType="multipart/form-data")
+      .form-group.row
+        label.col-md-2.col-form-label(for="profiles") Profiles
+        div.col-md-4
+          select.custom-select(id="profiles" name="profiles" required)
+            each profile in profiles
+                option(value=profile.key)=profile.name
+      .form-group.row
+        label.col-md-2.col-form-label(for="files") Files
+        div.col-md-4
+          input.form-control(id="files" name="files" type="file" multiple required)
+      .form-group.row
+        .col-md-6
+          input.btn.btn-primary(type="submit" value="Upload")

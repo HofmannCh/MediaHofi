@@ -8,17 +8,23 @@
     "start": "node ./init.js"
   },
   "dependencies": {
+    "better-sqlite3-with-prebuilds": "^7.1.1",
     "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
     "express": "^4.16.3",
     "express-basic-auth": "^1.2.0",
     "express-fileupload": "^1.2.0",
     "express-handlebars": "^5.2.0",
+    "express-session": "^1.17.1",
+    "express-zip": "^3.0.0",
+    "js-sha256": "^0.9.0",
     "mime-types": "^2.1.27",
     "moment": "^2.29.1",
     "morgan": "^1.10.0",
     "pretty-bytes": "^5.1.0",
-    "sqlite3": "^5.0.0",
+    "pug": "^3.0.0",
+    "session-file-store": "^1.5.0",
     "uuid": "^8.3.1"
   },
   "devDependencies": {
@@ -26,9 +32,8 @@
   },
   "nodemonConfig": {
     "watch": [
-      "init.js",
-      "views"
+      "*"
     ],
-    "ext": "js, .hbs"
+    "ext": "js, pug, hbs"
   }
 }

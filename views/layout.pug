@@ -1,0 +1,78 @@
+block variables
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1, shrink-to-fit=no")
+    title= title ? title + " hofi.dev" : "hofi.dev"
+    meta(property="og:title" content="hofi.dev")
+    meta(name="description" content=title)
+    meta(property="og:description" content=title)
+
+    //- jQuery, Moment
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js")
+    
+    //- Daterangepicker
+    link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css")
+    script(src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js")
+    
+    //- Bootstrap
+    link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css")
+    script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js")
+    //- Bootstrap select
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js")
+    
+    //- Font awesome
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js")
+    
+    //- jQuery toast
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js")
+    script(src="/static/index.js")
+  body.container
+    header
+      nav.navbar.navbar-expand-md.navbar-light.bg-light
+        a.navbar-brand(href='/') Hofi Mediashare
+
+        if session.username
+          .nav-item.d-block.d-md-none.float-right
+            span.navbar-text
+            if session.isAdmin
+              i.fas.fa-key.mr-1.smoll.text-danger
+            =session.displayName
+
+        button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
+          span.navbar-toggler-icon
+
+        .collapse.navbar-collapse(id='navbarSupportedContent')
+          ul.navbar-nav.mr-auto
+            if session.username
+              li.nav-item(class={active: url == "/upload"})
+                a.nav-link(href='/upload') Upload
+              li.nav-item(class={active: url == "/profile"})
+                a.nav-link(href='/profile') Profiles
+              if session.isAdmin
+                li.nav-item(class={active: url == "/user"})
+                  a.nav-link(href='/user') Users
+
+          ul.navbar-nav.float-md-right
+            if session.username
+              li.nav-item.d-none.d-md-block
+                span.navbar-text
+                  if session.isAdmin
+                    i.fas.fa-key.mr-1.smoll.text-danger
+                  =session.displayName
+              li.nav-item(class={active: url == "/logout"})
+                a.nav-link(href='/logout') Logout
+            else
+              li.nav-item(class={active: url == "/login"})
+                a.nav-link(href='/login') Login
+    #root.container
+      block layout-content
+  style.
+    .smoll {
+      font-size: .85em;
+    }

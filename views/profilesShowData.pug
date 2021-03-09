@@ -1,0 +1,23 @@
+for day in days
+  .day
+    h2.day-heading=day.date.format("DD.MM.YYYY")
+    .day-row
+      for file in day.files
+        .blob-wrapper(data-id=file.id)
+          a(href="/i/" + file.path onClick="return !(window.event.ctrlKey || window.event.shiftKey);")
+            .blob
+              if file.isImage
+                img(src=("/data/"+file.path) alt=file.name)
+              else if file.isAudio
+                audio(controls alt=file.name)
+                  source(src=("/data/"+file.path))
+              else if file.isVideo
+                video(controls alt=file.name)
+                  source(src=("/data/"+file.path))
+              else if file.isIframe
+                iframe(src=("/data/"+file.path) alt=file.name frameborder="0")
+              else
+                img(src="/static/leaves.png" alt=file.name)
+          .meta
+            small.d-block=file.name
+            small.d-block=file.date.format("HH:mm:ss")

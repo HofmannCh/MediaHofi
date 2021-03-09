@@ -6,3 +6,6 @@ data/
 .env
 prod.env
 requests.log
+.vscode/
+old/
+sessions/

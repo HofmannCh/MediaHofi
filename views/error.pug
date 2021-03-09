@@ -1,0 +1,7 @@
+extends layout
+
+block layout-content
+  div.content
+    h1.banner=`Error ${res().statusCode}`.trimRight() + " ❗"
+    button.btn.btn-sm.btn-primary(onclick="window.history.back();") Back
+    pre.mt-2=msg
