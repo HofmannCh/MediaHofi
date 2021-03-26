@@ -47,6 +47,16 @@ $(".content")
         if (!toUpdate)
             return;
         window.open("/profile/downloadFile/" + toUpdate, "_blank");
+    }).on("click", ".open-files", e => {
+        const all = [...window.selectable.getSelectedNodes()];
+        if (!all)
+            return;
+        if (all.length === 1) {
+            window.location.href = all[0].querySelector("a").href;
+        } else {
+            for (const al of all)
+                window.open(al.querySelector("a").href, "_blank");
+        }
     }).on("click", ".delete-files", e => {
         const all = window.selectable.getSelectedNodes();
         const tou = [...all].map(x => x.attributes["data-id"].value);

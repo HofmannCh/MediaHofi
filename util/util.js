@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const supportedFileExtensions = ["avi", "mov", "mp4", "mp3", "ogg", "webm", "wav", "bmp", "gif", "jpg", "jpeg", "png", "webp", "svg", "txt", "pdf", "json", "xml"];
+const supportedImageExtensions = ["bmp", "gif", "icns", "ico", "jpeg", "jpg", "png", "psd", "svg", "tiff", "webp"];
 
 const dataPath = path.join(process.cwd(), './data');
 
@@ -94,6 +95,7 @@ module.exports = {
   admin,
   createProfile,
   supportedFileExtensions,
+  supportedImageExtensions,
   deleteFilesByPath,
   deleteFilesById,
   dataPath

@@ -10,8 +10,8 @@ html
     
     title=name + " hofi.dev"
     meta(property="og:title" content="hofi.dev")
-    meta(name="description" content=name)
-    meta(property="og:description" content=name)
+    meta(name="description" content=(metaString ? `${metaString} | ${fileSize} | ${name}` : `${fileSize} | ${name}`))
+    meta(property="og:description" content=(metaString ? `${metaString} | ${fileSize} | ${name}` : `${fileSize} | ${name}`))
     meta(property="og:url" content=absoluteBlobUrl)
     if isImage
       meta(property="og:image" content=absoluteBlobUrl)
@@ -45,6 +45,13 @@ html
           div
             small Creation Date:
             span(style="display: inline-block")=creationDate
+          div
+            small Size:
+            span(style="display: inline-block")=fileSize
+          if metaString
+            div
+              small Meta:
+              span(style="display: inline-block")=metaString
       if isImage
         #content-image.blob
           img(src=blobUrl alt=name)
@@ -208,4 +215,9 @@ html
 
       .caption>div>small {
           margin-right: 2px;
+          font-size: .7em;
+      }
+
+      .caption>div>span {
+          color: white;
       }

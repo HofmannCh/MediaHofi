@@ -28,6 +28,8 @@ CREATE TABLE files (
     content_type TEXT NOT NULL,
     creation_date INT NOT NULL,
     profile_id INT NOT NULL,
+    size_bytes INT NOT NULL,
+    meta TEXT NULL,
     FOREIGN KEY (profile_id) REFERENCES profiles(id)
 );
 

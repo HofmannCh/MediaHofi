@@ -4,6 +4,8 @@ const path = require("path");
 const fileUpload = require("express-fileupload");
 const mime = require("mime-types");
 const crypto = require("crypto");
+const sizeOf = require('image-size')
+const prettyBytes = require('pretty-bytes')
 
 const util = require("../util/util");
 const HttpError = require("../util/HttpError");
@@ -15,6 +17,11 @@ router.get("/i/:id", (req, res) => {
         LEFT JOIN profiles AS p ON p.id = f.profile_id
         WHERE path = ?`).get(req.params.id);
     if (row) {
+        row.meta = row.meta ? JSON.parse(row.meta) : {};
+        let metaString;
+        if(row.meta && row.meta.type === "img"){
+            metaString = `${row.meta.width}x${row.meta.height}`;
+        }
         return res.render("raw", {
             inDb: true,
             canDelete: util.isAuth(req) && req.session.userId === row.user_id,
@@ -25,6 +32,8 @@ router.get("/i/:id", (req, res) => {
             absoluteBlobUrl: process.env.BASE_URL + "data/" + row.path,
             isImage: row.content_type.startsWith("image/"),
             contentType: row.content_type,
+            fileSize: prettyBytes(row.size_bytes),
+            metaString: metaString,
         });
     } else {
         const contentType = mime.contentType(req.params.id);
@@ -35,7 +44,8 @@ router.get("/i/:id", (req, res) => {
             blobUrl: "/data/" + req.params.id,
             absoluteBlobUrl: process.env.BASE_URL + "data/" + req.params.id,
             isImage: contentType.startsWith("image/"),
-            contentType: contentType,
+            fileSize: prettyBytes(fs.statSync(path.join(util.dataPath, req.params.id)).size),
+            contentType: contentType
         });
     }
 });
@@ -93,15 +103,25 @@ router.post("/upload", fileUpload(), (req, res) => {
                 error.push(val.message);
                 continue;
             }
-            req.db.prepare("INSERT INTO files (name, path, content_type, creation_date, profile_id) VALUES (?, ?, ?, ?, ?)")
-                .run(val[0].name, val[1], val[0].mimetype, now, profile.id);
+
+            const fileStats = fs.statSync(path.join(util.dataPath, val[1]));
+            const meta = {};
+            if(util.supportedImageExtensions.some(x => val[1].toLowerCase().endsWith(x))){
+                const is = sizeOf(path.join(util.dataPath, val[1]));
+                meta.type = "img";
+                meta.width = is.width;
+                meta.height = is.height;
+            } // Other specific meta stuff
+
+            req.db.prepare("INSERT INTO files (name, path, content_type, creation_date, profile_id, size_bytes, meta) VALUES (?, ?, ?, ?, ?, ?, ?)")
+                .run(val[0].name, val[1], val[0].mimetype, now, profile.id, fileStats.size, JSON.stringify(meta));
 
             console.log("File " + val[0].name + " uploaded to " + val[1]);
 
             returns.push({
                 shouldShow: util.supportedFileExtensions.includes(val[1].substring(val[1].lastIndexOf(".") + 1)),
                 file: process.env.BASE_URL + "i/" + val[1]
-            })
+            });
         }
 
         if (req.xhr) {
@@ -130,7 +150,7 @@ router.post("/upload", fileUpload(), (req, res) => {
                 error: e.message
             });
         } else {
-            return res.status(500).render({
+            return res.status(500).render("error",{
                 msg: e.message
             });
         }
